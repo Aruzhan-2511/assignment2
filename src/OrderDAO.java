@@ -3,14 +3,13 @@ import java.util.Arrays;
 
 public class OrderDAO {
 
-    // Добавить заказ в базу (массив product_ids)
     public void addOrder(int[] productIds) {
         String sql = "INSERT INTO orders(product_ids) VALUES(?)";
 
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // Преобразуем int[] в Integer[] для SQL
+
             Array sqlArray = conn.createArrayOf("INTEGER", Arrays.stream(productIds).boxed().toArray(Integer[]::new));
             pstmt.setArray(1, sqlArray);
             pstmt.executeUpdate();
@@ -22,7 +21,7 @@ public class OrderDAO {
         }
     }
 
-    // Вывести все заказы с продуктами
+
     public void getAllOrders() {
         String sql = "SELECT o.id AS order_id, p.name, p.cost " +
                 "FROM orders o, products p " +

@@ -4,6 +4,12 @@ public class Product {
     private String name;
     private int cost;
 
+    private int id;
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+
     public Product(String name) {
         this.name = name;
         this.cost = 500;

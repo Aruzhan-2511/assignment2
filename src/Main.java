@@ -1,30 +1,30 @@
 public class Main {
     public static void main(String[] args) {
+        Product laptop = new Product("Laptop", 350000);
+        Product mouse = new Product("Mouse", 5000);
 
-        Product p1 = new Product("Laptop", 350000);
-        Product p2 = new Product("Mouse", 5000);
-        Product p3 = new Product("Keyboard", 12000);
-        Product p4 = new Product("USB Cable");
+        Order order = new Order();
+        order.addProduct(laptop);
+        order.addProduct(mouse);
 
-        Order order1 = new Order();
-        order1.addProduct(p1);
-        order1.addProduct(p2);
-        order1.addProduct(p3);
-        order1.addProduct(p4);
-        Shopper shopper = new Shopper("Aruzhan");
-        shopper.addOrder(order1);
+        ProductDAO productDAO = new ProductDAO();
+        OrderDAO orderDAO = new OrderDAO();
 
-        System.out.println(shopper);
-        System.out.println(order1);
+        productDAO.addProduct(laptop);
+        productDAO.addProduct(mouse);
 
-        Product found = order1.findProductByName("mouse");
-        System.out.println("Found product: " + found);
-        System.out.println("Products cheaper than 10000: ");
-        for (Product p : order1.filterByCost(10000)) {
+        int[] productIds = order.getProducts().stream().mapToInt(Product::getId).toArray();
+        orderDAO.addOrder(productIds);
+
+        System.out.println("\nAll products in DB:");
+        for (Product p : productDAO.getAllProducts()) {
             System.out.println(p);
         }
-        order1.sortByCost();
-        System.out.println("Products after sorting by cost: ");
-        System.out.println(order1);
+
+        System.out.println("\nAll orders in DB:");
+        orderDAO.getAllOrders();
+
+        productDAO.updatePrice("Laptop", 360000);
+        productDAO.deleteProduct("Mouse");
     }
 }

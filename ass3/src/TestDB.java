@@ -1,0 +1,22 @@
+import com.example.shop.db.DatabaseConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
+public class TestDB {
+    public static void main(String[] args) {
+        try (Connection conn = DatabaseConnection.connect()) {
+            System.out.println("Connected to DB!");
+
+            String sql = "INSERT INTO products(name, cost) VALUES (?, ?)";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, "TestProduct");
+                ps.setInt(2, 123);
+                ps.executeUpdate();
+                System.out.println("Inserted TestProduct into products");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

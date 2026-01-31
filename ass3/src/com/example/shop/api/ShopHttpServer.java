@@ -29,7 +29,6 @@ ShopHttpServer {
         System.out.println("REST API started on http://localhost:8080");
     }
 
-    // ---------- PRODUCTS ----------
     private static void handleProducts(HttpExchange exchange) throws IOException {
         ProductDAO productDAO = new ProductDAO();
 
@@ -66,7 +65,6 @@ ShopHttpServer {
         }
     }
 
-    // ---------- ORDERS ----------
     private static void handleOrders(HttpExchange exchange) throws IOException {
         OrderDAO orderDAO = new OrderDAO();
 
@@ -89,7 +87,6 @@ ShopHttpServer {
         }
     }
 
-    // ---------- UTILS ----------
     private static String readRequestBody(HttpExchange exchange) throws IOException {
         try (InputStream is = exchange.getRequestBody()) {
             return new String(is.readAllBytes(), StandardCharsets.UTF_8);
@@ -106,7 +103,6 @@ ShopHttpServer {
         }
     }
 
-    // Очень примитивный JSON парсер
     private static String extractJsonValue(String json, String key) {
         String search = "\"" + key + "\":";
         int start = json.indexOf(search) + search.length();
